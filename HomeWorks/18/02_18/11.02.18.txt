@@ -1,0 +1,43 @@
+1) Создать калькулятор:
+   Метод класса возвращает значение для операции. Создать методы под действия *, /, -, +, %.
+   Создать два public метода, возвращающих случайные числа.
+   Каждый метод класса вызывает один из методов(возвращают случайные числа),
+    чтобы получить значения для операций.
+   Протестировать методы, выполняющие мат. действия. Для каждой операции в тесте возвращать разные значения используя Mockito.
+
+   Создать private методы, возвращающих случ. числа и сделать аналогичные операции, использовав PowerMock.
+   Создать public static методы, возвращающих случ. числа и сделать аналогичные операции.PowerMock
+
+2) 1) Различия между классами. Применение
+   2) Конструкторы
+   3) Методы LocalDate:
+    - format
+    - minus+
+    -  3 метода now +
+    -  parse+
+    -  plus+
+    -  of+
+    -  until+
+    -  isAfter+
+    -  isBefore+
+    4) Методы LocalDateTime:
+    - atZone+
+    - atOffset (https://docs.oracle.com/javase/tutorial/datetime/iso/timezones.html)
+    - from+
+    -  truncatedTo+
+    -  range+
+    5) Методы Calendar:
+    - add(https://www.tutorialspoint.com/java/util/calendar_add.htm)
+    - getInstance(TimeZone zone)
+    - getTimeZone() (https://www.tutorialspoint.com/java/util/calendar_gettimezone.htm)
+    - set
+   Примеры кода использования методов. Получение из этих объектов, объект Date
+3) 1) Create class MyTestMethod with generic static methodcalcNum (with two parameters: an array T[] and
+   variable maxElem of type T) that counts the number of elements in
+   an array T[] that are greater than a specified element maxElem.
+
+   2) Create a class Main with a main() method.Add to method main() code that creates two array,
+   first – array of Integer type and second – array of Double type.
+   Fill these arrays with some random values.
+   Add code to counts the number of elements in each of arrays that are greater
+   than a specified element by invoking calcNum() static method.

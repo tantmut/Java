@@ -1,0 +1,29 @@
+1) Translator
+2) Создать имитацию запросов в базу данных на основе коллекции c применением lambdas.
+
+   Сущности Man(имя, фамилия, возраст, количество детей, Адрес),
+   Адрес(страна, город, улица, количество жителей)
+
+   Использовать коллекцию ArrayList.
+
+   "SELECT * FROM Man";
+
+   "SELECT * FROM Address";
+
+   "SELECT firstName, lastName, countOfChildren FROM Man WHERE age >= 20 ORDER BY firstName";
+
+   "UPDATE Man SET firstName = 'John', lastName = 'Kennedi', countOfChildren = 3 WHERE country == 'US' (or another country)
+
+   "SELECT firstName, lastName, nameOfStreet FROM Man WHERE country == 'Canada' AND numberOfHome == 3 OR age >= 25";
+
+   "SELECT count(*) FROM Man GROUP BY countOfChildren"
+
+   "SELECT count(*) FROM Man GROUP BY countOfChildren, age"
+
+   "SELECT count(*) FROM Address GROUP BY city, nameOfStreet";
+
+   "SELECT count(*) FROM Address GROUP BY city, nameOfStreet HAVING countOfCitizens > 4";
+
+   "SELECT count(*) FROM Man GROUP BY city, nameOfStreet";
+
+   "SELECT count(*) FROM Man GROUP BY city , nameOfStreet HAVING countOfCitizens > 4";

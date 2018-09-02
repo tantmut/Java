@@ -1,0 +1,88 @@
+1) Создать калькулятор:
+   Метод класса возвращает значение для операции. Создать методы под действия *, /, -, +, %.
+   Создать два public метода, возвращающих случайные числа.
+   Каждый метод класса вызывает один из методов(возвращают случайные числа),
+    чтобы получить значения для операций.
+   Протестировать методы, выполняющие мат. действия. Для каждой операции в тесте возвращать разные значения используя Mockito.
+
+   Создать private методы, возвращающих случ. числа и сделать аналогичные операции, использовав PowerMock.
+
+
+2) 1) Различия между классами. Применение
+   2) Конструкторы
+   3) Методы LocalDate:
+    - format
+    - minus+
+    -  3 метода now +
+    -  parse+
+    -  plus+
+    -  of+
+    -  until+
+    -  isAfter+
+    -  isBefore+
+    4) Методы LocalDateTime:
+    - atZone+
+    - atOffset (https://docs.oracle.com/javase/tutorial/datetime/iso/timezones.html)
+    - from+
+    -  truncatedTo+
+    -  range+
+    5) Методы Calendar:
+    - add(https://www.tutorialspoint.com/java/util/calendar_add.htm)
+    - getInstance(TimeZone zone)
+    - getTimeZone() (https://www.tutorialspoint.com/java/util/calendar_gettimezone.htm)
+    - set
+
+   Примеры кода исполь   6) Позволить пользователю вводить формат даты и выводить дату в этом формате.
+з   6) Позволить пользователю вводить формат даты и выводить дату в этом формате.
+ования методов. Получение из этих объектов, объект Date
+
+3) Организовать приложение календарь.
+   Приложение должно позволять:
+             При выводе даты и времени(По Украине) выводить также события на данный день.
+   2) Создавать событие на конкретную дату и по требованию пользователя выводить список событий на эту дату.
+            Добавить возможность удалять события.
+
+
+
+   Please create an abstarct class Shape and two subclasses Square and Circle.
+
+   Replace code in method drawShape() according to principles of polymorphism.
+
+   Please propose the other solutions for improving quality of the code.
+
+   enum ShareType {
+       SQUARE, CIRCLE
+   }
+
+   class Shape {
+       private ShareType shareType;
+
+       //other fields
+
+
+       public Shape(ShareType shareType) {
+           this.shareType = shareType;
+       }
+
+       public ShareType getShareType() {
+           return shareType;
+       }
+
+       public void drawSquare() {
+           //Code for drawing square
+       }
+
+       public void drawCircle() {
+           //Code for drawing square
+       }
+
+       public void drawShape() {
+           if (getShareType() == ShareType.SQUARE) {
+               drawSquare();
+           } else {
+               drawCircle();
+           }
+       }
+
+       //others methods
+   }
