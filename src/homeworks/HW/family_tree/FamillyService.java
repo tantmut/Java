@@ -7,28 +7,27 @@ import java.util.Objects;
 
 public class FamillyService {
 
-    private static Person person;
-    private static Map<Person, List<Person>> relatives;
+    private Map<Person, List<Person>> relatives;
 
-    public FamillyService(Person person, Map<Person, List<Person>> relatives) {
-        this.person = person;
-        this.relatives = relatives;
+    public FamillyService() {
+        this.relatives = new HashMap<>();
     }
 
-    public static Map<Person, List<Person>> getRelatives() {
-        return relatives;
+    public void addRelatives(Person person, List<Person> people) {
+        relatives.put(person, people);
     }
 
-    public static void lineage() {
+    public void lineage(Person person) {
 
-        if (Objects.isNull(person.getRelatives())) {
-            return;
-        }
+        List<Person> people = relatives.get(person);
 
         System.out.println(person.getName() + " " + person.getSurName());
 
-        person.getRelatives().forEach(
-                (key, val) -> val.stream().forEach((k) -> k.lineage()));
+        if (Objects.isNull(people)) {
+            return;
+        }
+
+        people.forEach(this::lineage);
 
     }
 }

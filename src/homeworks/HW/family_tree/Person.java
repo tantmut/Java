@@ -45,12 +45,24 @@ public class Person {
         return surName;
     }
 
-    public Map<Person, List<Person>> getRelatives() {
-        return FamillyService.getRelatives();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Person person = (Person) o;
+        return Objects.equals(name, person.name) &&
+                Objects.equals(surName, person.surName) &&
+                sex == person.sex;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, surName, sex);
     }
 
     public void lineage() {
-        FamillyService.lineage();
+//        FamillyService.lineage(null);
     }
 }
 //    Создать приложение родословная. Приложение должно позволять:
