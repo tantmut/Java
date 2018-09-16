@@ -6,14 +6,47 @@ import java.util.Objects;
 
 public class Person {
 
-    //    private String birthDate;
-//    private String deathDate;
-//    private String weddingDate;
-//    private String job;
-//    private String livingPlace;
-//    private int amountOfChildren;
-//    private int age;
-//    private boolean alive;
+
+    private int amountOfChildren;
+    private int age;
+    private boolean alive;
+
+    public int getAmountOfChildren() {
+        return amountOfChildren;
+    }
+
+    public void setAmountOfChildren(int amountOfChildren) {
+        this.amountOfChildren = amountOfChildren;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public boolean isAlive() {
+        return alive;
+    }
+
+    public void setAlive(boolean alive) {
+        this.alive = alive;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setSurName(String surName) {
+        this.surName = surName;
+    }
+
+    public void setSex(Sex sex) {
+        this.sex = sex;
+    }
+
     private String name;
     private String surName;
     private Sex sex;
@@ -27,15 +60,19 @@ public class Person {
         this.surName = surName;
     }
 
+    public Person(String name, String surName, int age, int amountOfChildren, boolean alive, Sex sex) {
+        this.name = name;
+        this.surName = surName;
+        this.amountOfChildren = amountOfChildren;
+        this.age = age;
+        this.alive = alive;
+        this.sex = sex;
+
+    }
+
     public Sex getSex() {
         return sex;
     }
-
-//    public Map<Person, List<Person>> getRelatives() {
-//        return FamillyService.getRelatives();
-//    }
-//
-//    private Map<Person, List<Person>> relatives;
 
     public String getName() {
         return name;
@@ -44,7 +81,6 @@ public class Person {
     public String getSurName() {
         return surName;
     }
-
 
     @Override
     public boolean equals(Object o) {
@@ -61,18 +97,5 @@ public class Person {
         return Objects.hash(name, surName, sex);
     }
 
-    public void lineage() {
-//        FamillyService.lineage(null);
-    }
 }
-//    Создать приложение родословная. Приложение должно позволять:
-//        1) Выводить родословное дерево конкретного человека.
-//        2) Показывать прямых родственников
-//        3) Вычислять статистику по всему дереву:
-// количество живых, мужчин/женщин, среднее количество детей, среднюю продолжительность жизни
-//        4) Отображать в дереве место и даты рождения и свадьбы,
-// место жительства, профессию и другую информацию о персоне;
-//        5) Показывать прямых родственников с братьями и сёстрами, все родственники.
-//        6) Показывать степень родства двух людей.
-
 

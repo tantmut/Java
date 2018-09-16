@@ -1,13 +1,13 @@
 package homeworks.HW.family_tree;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class FamillyService {
 
     private Map<Person, List<Person>> relatives;
+    private List<Person> allRelatives = new ArrayList<>();
+    private int count;
 
     public FamillyService() {
         this.relatives = new HashMap<>();
@@ -17,7 +17,7 @@ public class FamillyService {
         relatives.put(person, people);
     }
 
-    public void lineage(Person person) {
+    public void printAllRelatives(Person person) {
 
         List<Person> people = relatives.get(person);
 
@@ -27,7 +27,91 @@ public class FamillyService {
             return;
         }
 
-        people.forEach(this::lineage);
+        people.forEach(this::printAllRelatives);
 
+    }
+
+    public void printDirectRelatives(Person person) {
+
+        List<Person> people = relatives.get(person);
+        people.forEach(p -> System.out.println(p.getName() + " " + p.getSurName()));
+
+    }
+
+
+    private List<Person> getAllRelatives(Person person) {
+
+        List<Person> people = relatives.get(person);
+
+        allRelatives.add(person);
+
+        if (Objects.isNull(people)) {
+            return null;
+        }
+
+        people.forEach(this::getAllRelatives);
+
+        return allRelatives;
+    }
+
+    public int getAmountOfAlived(Person nazar) {
+
+        List<Person> getAllRelatives = getAllRelatives(nazar);
+
+        return (int) getAllRelatives.stream().filter(p->p.isAlive() == true).count();
+
+    }
+
+    public int getAmountOfMan(Person nazar) {
+
+        List<Person> getAllRelatives = getAllRelatives(nazar);
+
+        return (int) getAllRelatives.stream().filter(p->p.getSex() == Sex.MAN).count();
+
+    }
+
+    public int getAmountOfWoman(Person nazar) {
+
+        List<Person> getAllRelatives = getAllRelatives(nazar);
+
+        return (int) getAllRelatives.stream().filter(p->p.getSex() == Sex.WOMAN).count();
+
+    }
+
+    public double getAverageChildren(Person nazar) {
+
+        List<Person> getAllRelatives = getAllRelatives(nazar);
+
+        double sumOfAllChildren = (double) getAllRelatives.stream()
+                .collect(Collectors.summarizingInt(Person::getAmountOfChildren)).getSum();
+
+        return sumOfAllChildren/getAllRelatives.size();
+
+    }
+
+
+    public double getAverageAge(Person nazar) {
+
+        List<Person> getAllRelatives = getAllRelatives(nazar);
+
+        double sumOfAllChildren = (double) getAllRelatives.stream()
+                .collect(Collectors.summarizingInt(Person::getAge)).getSum();
+
+        return sumOfAllChildren/getAllRelatives.size();
+
+    }
+
+    public int getRelationDegree(Person person, Person person1) {
+
+        List<Person> people = relatives.get(person);
+
+        if (people.contains(person1)) {
+            return count;
+        }
+
+        count++;
+        people.forEach(this::getAllRelatives);
+
+        return count;
     }
 }
