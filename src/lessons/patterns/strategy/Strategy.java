@@ -1,4 +1,4 @@
-package lessons.patterns;
+package lessons.patterns.strategy;
 
 import java.util.*;
 

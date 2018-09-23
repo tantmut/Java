@@ -10,6 +10,14 @@ public class FileService {
     public static final String ROOT_PATH =
             "/home/nazar/IdeaProjects/JavaProject/file_for_testing/";
 
+    public FileService() throws IOException {
+        Path path = Paths.get(ROOT_PATH);
+
+        if(!Files.exists(path)){
+            Files.createDirectory(Paths.get(ROOT_PATH));
+        }
+    }
+
     public void createFile(String file) throws IOException {
 
         Path pathToFile = Paths.get(ROOT_PATH + file);

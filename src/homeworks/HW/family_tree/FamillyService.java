@@ -6,11 +6,12 @@ import java.util.stream.Collectors;
 public class FamillyService {
 
     private Map<Person, List<Person>> relatives;
-    private List<Person> allRelatives = new ArrayList<>();
+    private List<Person> allRelatives;
     private int count;
 
     public FamillyService() {
-        this.relatives = new HashMap<>();
+        relatives = new HashMap<>();
+        allRelatives = new ArrayList<>();
     }
 
     public void addRelatives(Person person, List<Person> people) {
@@ -54,11 +55,11 @@ public class FamillyService {
         return allRelatives;
     }
 
-    public int getAmountOfAlived(Person nazar) {
+    public long getAmountOfAlived(Person nazar) {
 
         List<Person> getAllRelatives = getAllRelatives(nazar);
 
-        return (int) getAllRelatives.stream().filter(p->p.isAlive() == true).count();
+        return getAllRelatives.stream().filter(p -> p.isAlive() == true).count();
 
     }
 
@@ -66,7 +67,7 @@ public class FamillyService {
 
         List<Person> getAllRelatives = getAllRelatives(nazar);
 
-        return (int) getAllRelatives.stream().filter(p->p.getSex() == Sex.MAN).count();
+        return (int) getAllRelatives.stream().filter(p -> p.getSex() == Sex.MAN).count();
 
     }
 
@@ -74,7 +75,7 @@ public class FamillyService {
 
         List<Person> getAllRelatives = getAllRelatives(nazar);
 
-        return (int) getAllRelatives.stream().filter(p->p.getSex() == Sex.WOMAN).count();
+        return (int) getAllRelatives.stream().filter(p -> p.getSex() == Sex.WOMAN).count();
 
     }
 
@@ -85,7 +86,7 @@ public class FamillyService {
         double sumOfAllChildren = (double) getAllRelatives.stream()
                 .collect(Collectors.summarizingInt(Person::getAmountOfChildren)).getSum();
 
-        return sumOfAllChildren/getAllRelatives.size();
+        return sumOfAllChildren / getAllRelatives.size();
 
     }
 
@@ -97,7 +98,7 @@ public class FamillyService {
         double sumOfAllChildren = (double) getAllRelatives.stream()
                 .collect(Collectors.summarizingInt(Person::getAge)).getSum();
 
-        return sumOfAllChildren/getAllRelatives.size();
+        return sumOfAllChildren / getAllRelatives.size();
 
     }
 

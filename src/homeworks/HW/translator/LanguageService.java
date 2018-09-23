@@ -17,7 +17,7 @@ public class LanguageService {
 
     private Map<String, Map<String, String>> langCollection;
 
-    public LanguageService() {
+    public LanguageService() throws IOException {
 
         langCollection = new HashMap<>();
 
@@ -50,6 +50,14 @@ public class LanguageService {
     public void addNewPairOfWords(final String language, final String originWord,
                                   final String translatedWord) {
 
+//        if(langCollection.get(language)== null){
+//            Map<String, String> addNewWords = new HashMap<>();
+//            addNewWords.put(originWord, translatedWord);
+//            addNewPairLanguages(language);
+//            putAllDataFromFilesToMap();
+//            langCollection.put(language,addNewWords);
+//
+//        }
         langCollection.get(language).put(originWord, translatedWord);
 
     }

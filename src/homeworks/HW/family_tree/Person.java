@@ -6,54 +6,12 @@ import java.util.Objects;
 
 public class Person {
 
-
     private int amountOfChildren;
     private int age;
     private boolean alive;
-
-    public int getAmountOfChildren() {
-        return amountOfChildren;
-    }
-
-    public void setAmountOfChildren(int amountOfChildren) {
-        this.amountOfChildren = amountOfChildren;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public boolean isAlive() {
-        return alive;
-    }
-
-    public void setAlive(boolean alive) {
-        this.alive = alive;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setSurName(String surName) {
-        this.surName = surName;
-    }
-
-    public void setSex(Sex sex) {
-        this.sex = sex;
-    }
-
     private String name;
     private String surName;
     private Sex sex;
-
-    public Person() {
-
-    }
 
     public Person(String name, String surName) {
         this.name = name;
@@ -68,6 +26,26 @@ public class Person {
         this.alive = alive;
         this.sex = sex;
 
+    }
+
+    public int getAmountOfChildren() {
+        return amountOfChildren;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public boolean isAlive() {
+        return alive;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Sex getSex() {
