@@ -90,7 +90,7 @@ public class FileManager {
         System.out.println("Folder does not exist");
     }
 
-    class DeleteVisitor extends SimpleFileVisitor<Path> {
+    public static class DeleteVisitor extends SimpleFileVisitor<Path> {
         @Override
         public FileVisitResult visitFile(Path path, BasicFileAttributes basicFileAttributes) throws IOException {
             return delete(path);

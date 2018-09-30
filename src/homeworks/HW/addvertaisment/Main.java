@@ -2,16 +2,16 @@ package homeworks.HW.addvertaisment;
 
 import java.io.IOException;
 
+import static homeworks.HW.addvertaisment.FileService.ROOT_PATH;
+
 public class Main {
     public static void main(String[] args) throws IOException {
 
         AddService add = new AddService();
 
-//        add.createAdd("Mac", "Safari", "NewADD");
-        add.createNewScreen("Linux", "Chrome");
-//        add.deleteAdd("Linux", "Chrome");
-        add.createAdd("Linux", "Chrome","NewADD");
-
-        add.syncData();
+        add.createSite("Linux", "Chrome");
+        add.addScreen("addvertisment", ROOT_PATH + "Linux_Chrome");
+        add.changeAdd("file1", ROOT_PATH + "Linux_Chrome", "something new");
+        add.changeConf(ROOT_PATH+"Linux_Chrome","conf","Windows_Chrome");
     }
 }
