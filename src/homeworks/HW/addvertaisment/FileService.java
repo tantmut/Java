@@ -23,15 +23,18 @@ public class FileService {
     public void createFile(String file, String dir) throws IOException {
 
         Path path = Paths.get(dir);
+
         if (!Files.exists(path)) {
             Files.createDirectory(Paths.get(dir));
         }
+
         Path pathToFile = Paths.get(dir + "/" + file);
 
         if (!Files.exists(pathToFile)) {
             Files.createFile(pathToFile);
             return;
         }
+
         System.out.println("File  with the same name is already exist");
     }
 

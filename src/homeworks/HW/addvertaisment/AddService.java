@@ -1,79 +1,85 @@
 package homeworks.HW.addvertaisment;
 
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.channels.FileChannel;
+import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
-import java.util.Map;
+
 
 import static homeworks.HW.addvertaisment.FileService.ROOT_PATH;
 
 public class AddService {
 
-    private static final String PATH = "/home/nazar/IdeaProjects/JavaProject/add_files_for_testing/";
+    private static final String PATH = "./add_files_for_testing/";
+    public static final Path path = Paths.get(ROOT_PATH);
 
     private FileService fileService;
-    public static final Path path = Paths.get(ROOT_PATH);
+
 
     AddService() throws IOException {
         fileService = new FileService();
+        for (int i = 0; i <= 5; i++) {//IntStream
+            createSite("os" + i, "browser" + i);
+        }
     }
 
+    public void createSite(String os, String browser) throws IOException {
 
-    public void createSite(String linux, String chrome) throws IOException {
+        fileService.createFolder(os, browser);
 
-        fileService.createFolder(linux, chrome);
-        String newpath = PATH + linux + "_" + chrome;
-        for (int i = 0; i <= 4; i++) {
-            fileService.createFile("file" + i, newpath);
+        String path = PATH + os + "_" + browser;
+
+        for (int i = 0; i < 5; i++) {//IntStream
+            fileService.createFile("file" + i + ".txt", path);
         }
 
-        fileService.createFile("conf", newpath);
-        changeAdd("conf", newpath, linux + "_" + chrome);
+        fileService.createFile("conf", path);
 
-
+        changeAdd("conf", path, os + "_" + browser);
     }
 
-    public void deleteSite(String linux, String chrome) throws IOException {
-        fileService.deleteFolder(linux, chrome);
-
+    public void deleteSite(String os, String browser) throws IOException {
+        fileService.deleteFolder(os, browser);
     }
 
-    public void addScreen(String addvertisment, String siteName) throws IOException {
+    public void addScreen(String screenName, String siteName) throws IOException {
 
-        fileService.createFile(addvertisment, siteName);
+        fileService.createFile(screenName, siteName);
     }
 
-    public void changeAdd(String file1, String s, String something_new) throws IOException {
+    public void changeAdd(String addName, String pathToScreen, String textOfAdd) throws IOException {
 
+        try(FileWriter fw = new FileWriter(pathToScreen + "/" + addName, true)) {//should use Files class
 
-        FileWriter fw = new FileWriter(s + "/" + file1, true); //the true will append the new data
-        fw.write(something_new);//appends the string to the file
+            fw.write(textOfAdd);
+
+        }
+    }
+
+    public void changeConf(String pathToScreen, String confName, String newConf) throws IOException {
+
+        FileWriter fw = new FileWriter(pathToScreen + "/" + confName, false);//should use Files class
+
+        fw.write(newConf);
+
         fw.close();
-    }
 
-    public void changeConf(String s, String file, String windows_chrome) throws IOException {
-
-        FileWriter fw = new FileWriter(s + "/" + file, false); //the true will append the new data
-        fw.write(windows_chrome);//appends the string to the file
-        fw.close();
-        File folder = new File(s);
+        File folder = new File(pathToScreen);
 
         File[] listOfFiles = folder.listFiles();
 
+        /*DirectoryStream<Path> stream = Files.newDirectoryStream(null);
+
+        stream.forEach();*/
 
         for (File file1 : listOfFiles) {
 
-            if (file1.isFile() && !file1.toString().contains(file)) {
+            if (file1.isFile() && !file1.toString().contains(confName)) {
                 new FileWriter(file1).close();
             }
         }
-
-
     }
 }
