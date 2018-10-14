@@ -1,27 +1,22 @@
 package homeworks.HW.addvertaisment;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.DirectoryStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
-
-import static homeworks.HW.addvertaisment.FileService.ROOT_PATH;
+import java.nio.file.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Stream;
 
 public class AddService {
 
     private static final String PATH = "./add_files_for_testing/";
-    public static final Path path = Paths.get(ROOT_PATH);
-
+    private final String CONF_FILE = "conf.txt";
     private FileService fileService;
 
+    public static final Path path = Paths.get(PATH);
 
     AddService() throws IOException {
         fileService = new FileService();
-        for (int i = 0; i <= 5; i++) {//IntStream
+        for (int i = 0; i <= 5; i++) {
             createSite("os" + i, "browser" + i);
         }
     }
@@ -32,13 +27,13 @@ public class AddService {
 
         String path = PATH + os + "_" + browser;
 
-        for (int i = 0; i < 5; i++) {//IntStream
+        for (int i = 0; i < 5; i++) {
             fileService.createFile("file" + i + ".txt", path);
         }
 
-        fileService.createFile("conf", path);
+        fileService.createFile("conf.txt", path);
 
-        changeAdd("conf", path, os + "_" + browser);
+        changeAdd("conf.txt", path, os + "_" + browser);
     }
 
     public void deleteSite(String os, String browser) throws IOException {
@@ -46,40 +41,54 @@ public class AddService {
     }
 
     public void addScreen(String screenName, String siteName) throws IOException {
-
         fileService.createFile(screenName, siteName);
     }
 
     public void changeAdd(String addName, String pathToScreen, String textOfAdd) throws IOException {
-
-        try(FileWriter fw = new FileWriter(pathToScreen + "/" + addName, true)) {//should use Files class
-
-            fw.write(textOfAdd);
-
-        }
+        List<String> lines = new ArrayList<>();
+        lines.add(textOfAdd);
+        Files.write(Paths.get(pathToScreen + "/" + addName), lines);
     }
 
     public void changeConf(String pathToScreen, String confName, String newConf) throws IOException {
 
-        FileWriter fw = new FileWriter(pathToScreen + "/" + confName, false);//should use Files class
+        Path pathTofile = Paths.get(pathToScreen + "/" + confName);
+        List<String> lines = Files.readAllLines(pathTofile);
+        lines.add(newConf);
+        Files.write(pathTofile, lines);
+        deleteAllAddvertismentInScreen(pathToScreen, confName);
+    }
 
-        fw.write(newConf);
+    private void deleteAllAddvertismentInScreen(String pathToScreen, String confName)
+            throws IOException {
+        Path path = Paths.get(pathToScreen);
+        Files.list(path)
+                .forEach(file -> {
+                    if (file.toFile().isFile() && !file.toString().contains(confName)) {
+                        try {
+                            Files.newInputStream(file, StandardOpenOption.CREATE_NEW);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+    }
 
-        fw.close();
+    public void addNewAddvertisments(String os, String browser, String textOfAdd) throws IOException {
 
-        File folder = new File(pathToScreen);
+        Stream<Path> pathStream = Files.walk(Paths.get(PATH))
+                .filter(file -> file.toString().contains(os + "_" + browser));
 
-        File[] listOfFiles = folder.listFiles();
-
-        /*DirectoryStream<Path> stream = Files.newDirectoryStream(null);
-
-        stream.forEach();*/
-
-        for (File file1 : listOfFiles) {
-
-            if (file1.isFile() && !file1.toString().contains(confName)) {
-                new FileWriter(file1).close();
+        List<String> lines = new ArrayList<>();
+        lines.add(textOfAdd);
+        pathStream.forEach(file -> {
+            try {
+                if(file.toFile().isFile() && !file.toString().contains(CONF_FILE))
+                Files.write(file, lines);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        }
+        });
+
     }
 }

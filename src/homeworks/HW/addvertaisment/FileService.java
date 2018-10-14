@@ -9,8 +9,7 @@ import java.nio.file.Paths;
 
 public class FileService {
 
-    public static final String ROOT_PATH =
-            "/home/nazar/IdeaProjects/JavaProject/add_files_for_testing/";
+    public static final String ROOT_PATH = "./add_files_for_testing/";
 
     public FileService() throws IOException {
         Path path = Paths.get(ROOT_PATH);

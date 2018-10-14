@@ -10,8 +10,13 @@ public class Main {
         AddService add = new AddService();
 
         add.createSite("Linux", "Chrome");
-        add.addScreen("addvertisment", ROOT_PATH + "Linux_Chrome");
-        add.changeAdd("file1", ROOT_PATH + "Linux_Chrome", "something new");
-        add.changeConf(ROOT_PATH + "Linux_Chrome", "conf", "Windows_Chrome");
+
+        add.addScreen("addvertisment.txt", ROOT_PATH + "Linux_Chrome");
+        add.changeAdd("file1.txt", ROOT_PATH + "Linux_Chrome",
+                "something new");
+        add.changeConf(ROOT_PATH + "Linux_Chrome", "conf.txt",
+                "Windows_Chrome");
+
+        add.addNewAddvertisments("Linux","Chrome"," new Addvertisment");
     }
 }
