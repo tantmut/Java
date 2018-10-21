@@ -1,7 +1,19 @@
 package lessons.patterns.decorator;
+
 /*Structural pattern*/
 public interface Printable {//[\Hello\]
     void print();
+}
+
+abstract class DecoratorPrint implements Printable {
+    Printable printable;
+
+    DecoratorPrint(Printable printable) {
+            this.printable = printable;
+    }
+    public void print(){
+        printable.print();
+    }
 }
 
 class RealPrinter implements Printable {
@@ -18,52 +30,53 @@ class RealPrinter implements Printable {
     }
 }
 
-class LeftBracket implements Printable {
+class LeftBracket extends DecoratorPrint {
     private Printable printable;
 
     public LeftBracket(Printable printable) {
-        this.printable = printable;
+        super(printable);
     }
 
     @Override
     public void print() {
         System.out.print("[");
-        printable.print();
+        super.print();
     }
 }
 
-class RightBracket implements Printable {
+class RightBracket extends DecoratorPrint {
     private Printable printable;
 
     public RightBracket(Printable printable) {
-        this.printable = printable;
+        super(printable);
     }
 
     @Override
     public void print() {
-        printable.print();
+        super.print();
         System.out.print("]");
     }
 }
 
-class BackSlash implements Printable {
+class BackSlash extends DecoratorPrint {
     private Printable printable;
 
     public BackSlash(Printable printable) {
-        this.printable = printable;
+        super(printable);
     }
 
     @Override
     public void print() {
         System.out.print("\\");
-        printable.print();
+        super.print();
         System.out.print("\\");
     }
 }
 
+
 class TestDecorator {
     public static void main(String[] args) {
-        BackSlash hello = new BackSlash(new LeftBracket(new RightBracket(new RealPrinter("Hello"))));
+        Printable hello = new BackSlash(new LeftBracket(new RightBracket(new RealPrinter("hello"))));
 
         hello.print();
     }

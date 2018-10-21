@@ -10,12 +10,13 @@ import java.nio.file.Paths;
 public class FileService {
 
     public static final String ROOT_PATH = "./add_files_for_testing/";
+    private static final Path PATH = Paths.get(ROOT_PATH);
+
 
     public FileService() throws IOException {
-        Path path = Paths.get(ROOT_PATH);
 
-        if (!Files.exists(path)) {
-            Files.createDirectory(Paths.get(ROOT_PATH));
+        if (!Files.exists(PATH)) {
+            Files.createDirectory(PATH);
         }
     }
 
@@ -24,10 +25,10 @@ public class FileService {
         Path path = Paths.get(dir);
 
         if (!Files.exists(path)) {
-            Files.createDirectory(Paths.get(dir));
+            Files.createDirectory(path);
         }
 
-        Path pathToFile = Paths.get(dir + "/" + file);
+        Path pathToFile = Paths.get(dir, file);
 
         if (!Files.exists(pathToFile)) {
             Files.createFile(pathToFile);
@@ -38,19 +39,22 @@ public class FileService {
     }
 
 
-    public void createFolder(String name, String name1) throws IOException {
+    public void createFolder(String siteName) throws IOException {
 
         Path path = Paths.get(ROOT_PATH);
+
         if (!Files.exists(path)) {
-            Files.createDirectory(Paths.get(ROOT_PATH));
+            Files.createDirectory(path);
         }
-        Path pathToDir = Paths.get(ROOT_PATH + name + "_" + name1);
+
+        Path pathToDir = Paths.get(ROOT_PATH, siteName);
 
         if (!Files.exists(pathToDir)) {
             Files.createDirectory(pathToDir);
             return;
         }
-        System.out.println("Dir  with the same name is already exist");
+
+        System.out.println("Dir with the same name is already exist");
     }
 
     public void deleteFolder(String linux, String chrome) throws IOException {
