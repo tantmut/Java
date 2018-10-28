@@ -13,7 +13,7 @@ public class Template {
     }
 }
 
-class A extends Same{
+class A extends Same {
 
     @Override
     void differ() {
@@ -21,7 +21,7 @@ class A extends Same{
     }
 }
 
-class B extends Same{
+class B extends Same {
 
     @Override
     void differ() {
@@ -34,7 +34,7 @@ class B extends Same{
     }
 }
 
-class C extends Same{
+class C extends Same {
 
     @Override
     void differ() {
@@ -50,14 +50,13 @@ class C extends Same{
 
 abstract class Same {
 
-    public void print(){
+    public final void print() {
         System.out.println("\t\t\t*\n" +
                 "         ***\n" +
                 "        *****\n" +
                 "       *******\n" +
-                "      *********");
-        System.out.println();
-        System.out.println();
+                "      *********\n\n");
+
 
         differ();
         System.out.println();

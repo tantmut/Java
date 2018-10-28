@@ -78,14 +78,16 @@ public class AddService {
 
         Files.walk(Paths.get(PATH))
                 .filter(file -> file.toString().contains("conf.txt")
-                        && getStringOfFile(file).contains(os + "_" + browser))
+                        && getTextFile(file).contains(os + "_" + browser))
                 .map(f -> f.getParent())
                 .forEach(f -> {
                     try {
+
                         Files.walk(f)
                                 .forEach(file -> {
                                     try {
-                                        if (!file.toString().contains(CONF_FILE))
+                                        if (!Files.isDirectory(file) &&
+                                                !file.toString().contains(CONF_FILE))
                                             Files.write(file, Arrays.asList(textOfAdd));
                                     } catch (IOException e) {
                                         e.printStackTrace();
@@ -97,7 +99,7 @@ public class AddService {
                 });
     }
 
-    private String getStringOfFile(Path file) {
+    public static String getTextFile(Path file) {
         String s = null;
         try {
             s = new String(Files.readAllBytes(file));

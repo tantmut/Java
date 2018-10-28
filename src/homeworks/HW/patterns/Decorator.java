@@ -4,16 +4,17 @@ public class Decorator {
 
     public static void main(String[] args) {
 
-        PrinterInterface print = new SquareBrackets(new Brackets(new QuotesDecorator
+        Printable print = new SquareBrackets(new Brackets(new QuotesDecorator
                 (new Printer("Hello"))));
         print.print();
     }
 }
-interface PrinterInterface {
+
+interface Printable {
     void print();
 }
 
-class Printer implements PrinterInterface {
+class Printer implements Printable {
     private String value;
 
     Printer(String value) {
@@ -28,36 +29,37 @@ class Printer implements PrinterInterface {
 
 class SquareBrackets extends Decor {
 
-    public SquareBrackets(PrinterInterface component) {
+    public SquareBrackets(Printable component) {
         super(component);
     }
 
-    public void print(){
+    public void print() {
         System.out.print("[");
         super.print();
         System.out.print("]");
     }
 }
 
-class  Brackets extends Decor {
+class Brackets extends Decor {
 
-    public Brackets(PrinterInterface component) {
+    public Brackets(Printable component) {
         super(component);
     }
 
-    public void print(){
+    public void print() {
         System.out.print("{");
         super.print();
         System.out.print("}");
     }
 }
-class  QuotesDecorator extends Decor {
 
-    public QuotesDecorator(PrinterInterface component) {
+class QuotesDecorator extends Decor {
+
+    public QuotesDecorator(Printable component) {
         super(component);
     }
 
-    public void print(){
+    public void print() {
         System.out.print("\"");
         super.print();
         System.out.print("\"");
@@ -65,14 +67,14 @@ class  QuotesDecorator extends Decor {
     }
 }
 
-abstract class Decor implements PrinterInterface {
-    PrinterInterface component;
+abstract class Decor implements Printable {
+    Printable component;
 
-    public Decor(PrinterInterface component) {
+    public Decor(Printable component) {
         this.component = component;
     }
 
-    public void print(){
+    public void print() {
         component.print();
     }
 }

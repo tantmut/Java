@@ -1,13 +1,13 @@
 package lessons.patterns.builder;
 
-public class Car {
+public class    Car {
     private Transmission transmission;
     private String name;
+    private int maxSpeed;
 
     public Car() {
     }
 
-    private int maxSpeed;
 
     public Car(Transmission transmission, String name, int maxSpeed) {
         this.transmission = transmission;

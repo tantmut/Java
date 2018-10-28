@@ -1,127 +1,155 @@
 package homeworks.HW.patterns;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class Sql {
 
     public static void main(String[] args) {
-        Sql sql = new SqlBuilder().buildSelect(Arrays.asList("list", "list1"))
-                .buildFrom("house")
-                .build();
-        System.out.println(sql.toString());
+        UpdateBuilder builder = new UpdateBuilder();
 
-    }
+        WhereObject whereObject =
+                new WhereObject("country", "==", "'Canada'", "AND");
 
-    private List<String> select;
-    private String update;
-    private List<String> set;
-    private String from;
-    private String where;
-    private String groupBy;
+        WhereObject whereObject1 =
+                new WhereObject("numberOfHome", "==", "3", "OR");
+        WhereObject whereObject2 =
+                new WhereObject("age", ">=", "25", null);
 
-    public Sql(List<String> select, String update, List<String> set, String from, String where, String groupBy) {
-        this.select = select;
-        this.update = update;
-        this.set = set;
-        this.from = from;
-        this.where = where;
-        this.groupBy = groupBy;
-    }
+        List<Map.Entry> columns = Arrays.asList(Map.entry("nazar", "bazar"),
+                Map.entry("nazar1", "bazar1"));
 
-    //
-//    public Sql() {
-//    }
-//
-//    public Sql setSelect(String select) {
-//        this.select = select;
-//        return this;
-//    }
-//
-//    public Sql setParameters(List<String> parameters) {
-//        this.parameters = parameters;
-//        return this;
-//    }
-//
-//
-//    public Sql setFrom(String from) {
-//        this.from = from;
-//        return this;
-//    }
-//
-//    public Sql setTable(String table) {
-//        this.table = table;
-//        return this;
-//    }
-//
-//    public Sql setWhere(String where) {
-//        this.where = where;
-//        return this;
-//    }
-    @Override
-    public String toString() {
-        return "Sql{" +
-                "select=" + select +
-                ", update='" + update + '\'' +
-                ", set=" + set +
-                ", from='" + from + '\'' +
-                ", where='" + where + '\'' +
-                ", groupBy='" + groupBy + '\'' +
-                '}';
+        builder.buildTable("Man").buildSet(columns);
+
+        System.out.println(builder.build());
+
+        SelectBuilder builder1 = new SelectBuilder();
+
+        builder1.buildFrom(Arrays.asList("count(*)", "nazar", "bazar"))
+                .buildTable("city")
+                .buildWhere(Arrays.asList(whereObject, whereObject1, whereObject2));
+
+        System.out.println(builder1.build());
+
     }
 }
 
-class SqlBuilder {
-    private List<String> select;
-    private String update;
-    private List<String> set;
-    private String from;
-    private String where;
-    private String groupBy;
+class SelectBuilder {
 
-//    public SqlBuilder() {
-//    }
+    private StringBuilder builder;
 
-//    public SqlBuilder(String select, List<String> parameters, String from, String table, String where) {
-//        this.select = select;
-//        this.parameters = parameters;
-//        this.from = from;
-//        this.table = table;
-//        this.where = where;
-//    }
+    public SelectBuilder() {
+        builder = new StringBuilder("Select ");
+    }
 
-    public SqlBuilder buildSelect(List<String> select) {
-        this.select = select;
+    public SelectBuilder buildFrom(List<String> parametrs) {
+        parametrs.forEach(f ->
+        {
+            builder.append(f);
+            if (!parametrs.get(parametrs.size() - 1).equals(f))
+                builder.append(", ");
+        });
+        builder.append(" FROM ");
         return this;
     }
 
-    public SqlBuilder buildUpdate(String update) {
-        this.update = update;
+    public SelectBuilder buildTable(final String table) {
+        builder.append(table);
         return this;
     }
 
-    public SqlBuilder buildFrom(String from) {
-        this.from = from;
+    public SelectBuilder buildGroupBy(final List<String> parametrs) {
+        builder.append(" group by ");
+        parametrs.forEach(f ->
+        {
+            builder.append(f);
+            if (!parametrs.get(parametrs.size() - 1).equals(f))
+                builder.append(", ");
+        });
         return this;
     }
 
-    public SqlBuilder buildSet(List<String> set) {
-        this.set = set;
+    public SelectBuilder buildWhere(final List<WhereObject> parametrs) {
+
+        builder.append(" where ");
+        parametrs.forEach(f ->
+        {
+            builder.append(f.getParam1()).append(f.getCompare())
+                    .append(f.getParam2()).append(" ");
+            if(!(f.getStatement() == null))
+                builder.append(f.getStatement()).append(" ");
+
+          });
         return this;
     }
 
-    public SqlBuilder buildWhere(String where) {
-        this.where = where;
-        return this;
+    public String build() {
+        return builder.toString();
     }
 
-    public SqlBuilder builbGroupBy(String groupBy) {
-        this.groupBy = groupBy;
-        return this;
-    }
-
-    public Sql build() {
-        return new Sql(select, update, set, from, where, groupBy);
-    }
 }
 
+class UpdateBuilder {
+    private StringBuilder builder;
+
+    public UpdateBuilder() {
+        builder = new StringBuilder("UDPATE ");
+    }
+
+    public UpdateBuilder buildTable(String table) {
+        builder.append(table).append(" SET ");
+
+        return this;
+    }
+
+    public UpdateBuilder buildSet(List<Map.Entry> columns) {
+
+        List<AbstractMap.Entry> revert = columns;
+
+        revert.forEach(k -> {
+            builder.append(k.getKey()).append(" = ").append(k.getValue());
+            if (!revert.get(revert.size() - 1).equals(k))
+                builder.append(", ");
+        });
+
+
+        return this;
+
+    }
+
+    public String build() {
+        return builder.toString();
+    }
+
+
+}
+
+class WhereObject {
+
+    private String param1;
+    private String compare;
+    private String param2;
+    private String statement;
+
+    public String getParam1() {
+        return param1;
+    }
+
+    public String getCompare() {
+        return compare;
+    }
+
+    public String getParam2() {
+        return param2;
+    }
+
+    public String getStatement() {
+        return statement;
+    }
+
+    public WhereObject(String param1, String compare, String param2, String statement) {
+        this.param1 = param1;
+        this.compare = compare;
+        this.param2 = param2;
+        this.statement = statement;
+    }
+}
