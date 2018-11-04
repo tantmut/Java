@@ -1,8 +1,11 @@
 package homeworks.HW.multithreading;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.Scanner;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Stream;
 
 import static homeworks.HW.multithreading.WokersThreadApp.PATH_TO_FILE;
 
@@ -11,11 +14,14 @@ public class WokersThreadApp {
     protected static final String PATH_TO_FILE = "./file_for_testing/Story.txt";
 
     public static void main(String[] args) throws InterruptedException {
-        Worker worker = new Worker();
-        Worker worker1 = new Worker();
-        Worker worker2 = new Worker();
-        Worker worker3 = new Worker();
-        Worker worker4 = new Worker();
+
+        Worker worker = new Worker("like");
+        Worker worker1 = new Worker("in");
+        Worker worker2 = new Worker("like");
+        Worker worker3 = new Worker("like");
+        Worker worker4 = new Worker("like");
+
+        List<Worker> workers = Arrays.asList(worker, worker1, worker2, worker3, worker4);
 
         worker.start();
         worker1.start();
@@ -23,47 +29,46 @@ public class WokersThreadApp {
         worker3.start();
         worker4.start();
 
-        worker.join(22222);
+        worker.join();
         worker1.join();
         worker2.join();
         worker3.join();
         worker4.join();
 
-
-        /*System.out.println(worker.getRunTime("like"));
-        System.out.println(worker1.getRunTime("in"));
-        System.out.println(worker2.getRunTime("like"));
-        System.out.println(worker3.getRunTime("like"));
-        System.out.println(worker4.getRunTime("like"));*/
+        workers.stream().forEach(w -> System.out.println(w.getRunTime()));
 
     }
 }
 
 class Worker extends Thread {
 
-    /*@Override
-    public void run() {
-        int count = 0;
+    private String word;
 
-        try {
-            Scanner s = new Scanner(new File(PATH_TO_FILE));//lambda
-
-            while (s.hasNext()) {
-                if (s.next().equals(word)) count++;
-            }
-        } catch (IOException e) {
-            System.out.println("Error accessing input file!");
-        }
-//        return count;
+    public Worker(String word) {
+        this.word = word;
     }
 
-    public long getRunTime(final String word) {
+    @Override
+    public void run() {
+
+        try (Stream<String> stream = Files.lines(Paths.get(PATH_TO_FILE))) {
+
+            stream.forEach(f -> {
+                if (f.equals(word)) ;
+            });
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public long getRunTime() {
         long startTime = System.currentTimeMillis();
 
-        readFile(word);
+        run();
 
-        long time = System.currentTimeMillis() - startTime;
+        long endTime = System.currentTimeMillis() - startTime;
 
-        return time;
-    }*/
+        return endTime;
+    }
 }

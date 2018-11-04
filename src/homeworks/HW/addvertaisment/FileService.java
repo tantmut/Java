@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.util.Arrays;
 
 public class FileService {
 
@@ -38,6 +40,11 @@ public class FileService {
         System.out.println("File  with the same name is already exist");
     }
 
+    public static void writeToFile(final String s, final String path, final String workerName)
+            throws IOException {
+        Files.write(Paths.get(path, workerName + ".txt"), Arrays.asList(s),
+                StandardOpenOption.APPEND);
+    }
 
     public void createFolder(String siteName) throws IOException {
 
