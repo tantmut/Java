@@ -54,7 +54,7 @@ class Worker extends Thread {
         try (Stream<String> stream = Files.lines(Paths.get(PATH_TO_FILE))) {
 
             stream.forEach(f -> {
-                if (f.equals(word)) ;
+                if (f.equals(word));
             });
 
         } catch (IOException e) {

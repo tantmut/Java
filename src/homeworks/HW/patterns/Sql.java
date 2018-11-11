@@ -11,7 +11,7 @@ public class Sql {
                 new WhereObject("country", "==", "'Canada'", "AND");
 
         WhereObject whereObject1 =
-                new WhereObject("numberOfHome", "==", "3", "OR");
+                new WhereObject("number_of_home", "==", "3", "OR");
         WhereObject whereObject2 =
                 new WhereObject("age", ">=", "25", null);
 
@@ -38,7 +38,7 @@ class SelectBuilder {
     private StringBuilder builder;
 
     public SelectBuilder() {
-        builder = new StringBuilder("Select ");
+        builder = new StringBuilder("SELECT ");
     }
 
     public SelectBuilder buildFrom(List<String> parametrs) {
@@ -48,23 +48,29 @@ class SelectBuilder {
             if (!parametrs.get(parametrs.size() - 1).equals(f))
                 builder.append(", ");
         });
+
         builder.append(" FROM ");
+
+       /* String queryForMen = "SELECT * FROM man WHERE man_id IN(%s)"; ?, ?, ?
+        String joinString = String.join(",", Collections.nCopies(array.length, "?"));
+        String sql = String.format(queryForMen, joinString);*/
+
         return this;
     }
 
-    public SelectBuilder buildTable(final String table) {
+    public SelectBuilder buildTable(String table) {
         builder.append(table);
         return this;
     }
 
     public SelectBuilder buildGroupBy(final List<String> parametrs) {
-        builder.append(" group by ");
-        parametrs.forEach(f ->
-        {
+        builder.append(" group by ");//Uppercase
+        parametrs.forEach(f -> {
             builder.append(f);
             if (!parametrs.get(parametrs.size() - 1).equals(f))
                 builder.append(", ");
         });
+
         return this;
     }
 
@@ -75,8 +81,9 @@ class SelectBuilder {
         {
             builder.append(f.getParam1()).append(f.getCompare())
                     .append(f.getParam2()).append(" ");
-            if(!(f.getStatement() == null))
+            if(!(f.getStatement() == null)) {
                 builder.append(f.getStatement()).append(" ");
+            }
 
           });
         return this;
@@ -103,11 +110,10 @@ class UpdateBuilder {
 
     public UpdateBuilder buildSet(List<Map.Entry> columns) {
 
-        List<AbstractMap.Entry> revert = columns;
 
-        revert.forEach(k -> {
+        columns.forEach(k -> {
             builder.append(k.getKey()).append(" = ").append(k.getValue());
-            if (!revert.get(revert.size() - 1).equals(k))
+            if (!columns.get(columns.size() - 1).equals(k))
                 builder.append(", ");
         });
 
@@ -120,7 +126,6 @@ class UpdateBuilder {
         return builder.toString();
     }
 
-
 }
 
 class WhereObject {
@@ -129,6 +134,13 @@ class WhereObject {
     private String compare;
     private String param2;
     private String statement;
+
+    public WhereObject(String param1, String compare, String param2, String statement) {
+        this.param1 = param1;
+        this.compare = compare;
+        this.param2 = param2;
+        this.statement = statement;
+    }
 
     public String getParam1() {
         return param1;
@@ -146,10 +158,4 @@ class WhereObject {
         return statement;
     }
 
-    public WhereObject(String param1, String compare, String param2, String statement) {
-        this.param1 = param1;
-        this.compare = compare;
-        this.param2 = param2;
-        this.statement = statement;
-    }
 }

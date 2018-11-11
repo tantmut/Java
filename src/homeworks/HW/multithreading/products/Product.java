@@ -1,15 +1,25 @@
 package homeworks.HW.multithreading.products;
 
-import homeworks.HW.addvertaisment.FileService;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-import java.io.IOException;
+public class Product {
 
-public abstract class Product {
+    private String name;
 
-    public final static String PATH = "./factory_files/";
-    protected FileService fileService;
+    private List<Stageable> stages;
 
-    public abstract void cancelOrder(final String reason) throws IOException;
+    public Product(String name) {
+        this.name = name;
+        stages = new ArrayList<>();
+    }
 
-    public abstract String checkState();
+    public void addStageables(Stageable... stageable) {
+        stages.addAll(Arrays.asList(stageable));
+    }
+
+    public List<Stageable> getStages() {
+        return stages;
+    }
 }

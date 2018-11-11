@@ -1,7 +1,19 @@
 package homeworks.HW.multithreading.products;
 
-import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 public interface Stageable {
-    void action(final String workerName) throws IOException;
+    void action();
+
+
+    default void writeAction(String action) {
+            //write the action to specific txt file
+
+        try {
+            TimeUnit.MILLISECONDS.sleep(20);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+
+        }
+    }
 }

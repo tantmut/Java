@@ -31,16 +31,3 @@ public class Main {
 
     }
 }
-
-
-/*class Message {
-    text
-    from
-    to
-}
-
-Map<User, List<Message>>
-
-Slavik : {new Message(from: Slavik, to: Yulya, text:"")}
-Yulya : {new Message(from: Slavik, to: null, text:"Poshlyatina")}
-* */
