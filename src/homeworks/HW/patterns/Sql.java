@@ -42,12 +42,21 @@ class SelectBuilder {
     }
 
     public SelectBuilder buildFrom(List<String> parametrs) {
-        parametrs.forEach(f ->
-        {
-            builder.append(f);
-            if (!parametrs.get(parametrs.size() - 1).equals(f))
-                builder.append(", ");
-        });
+//        parametrs.forEach(f ->
+//        {
+//            builder.append(f);
+//            if (!parametrs.get(parametrs.size() - 1).equals(f))
+//                builder.append(", ");
+//        });
+
+        //Todo
+        String value = String.join(",", Collections
+                .nCopies(parametrs.size()-1, parametrs.get(0)));
+
+
+        builder.append(value);
+
+
 
         builder.append(" FROM ");
 

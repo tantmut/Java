@@ -2,12 +2,13 @@ package homeworks.HW.multithreading.products.bicycle;
 
 import homeworks.HW.multithreading.products.Stageable;
 
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 public class Wheels implements Stageable {
 
     @Override
-    public void action() {
+    public void action()   {
         writeAction("I have started development wheels");
 
         try {

@@ -24,6 +24,9 @@ public class FactoryApp {
 
         Worker nazar = new Worker(bicycle, "Nazar");
 
+        System.out.println(bicycle.checkState());
+        bicycle.cancelOrder("I don't want to buy it");
+
 
     }
 }

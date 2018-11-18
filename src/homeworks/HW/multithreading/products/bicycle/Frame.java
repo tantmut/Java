@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Frame implements Stageable {
 
-    public void action() {
+    public void action()   {
         writeAction("I have started development frame");
 
         try {

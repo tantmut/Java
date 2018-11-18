@@ -40,10 +40,9 @@ public class FileService {
         System.out.println("File  with the same name is already exist");
     }
 
-    public static void writeToFile(final String s, final String path, final String workerName)
+    public static void writeToFile(final Path path, final String text)
             throws IOException {
-        Files.write(Paths.get(path, workerName + ".txt"), Arrays.asList(s),
-                StandardOpenOption.APPEND);
+        Files.write(path, Arrays.asList(text), StandardOpenOption.APPEND);
     }
 
     public void createFolder(String siteName) throws IOException {
